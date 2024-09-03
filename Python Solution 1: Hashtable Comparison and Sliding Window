@@ -1,0 +1,29 @@
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        if len(s1) > len(s2):
+            return False
+        my_map = {}
+        my_map2 = {}
+        for letter in s1:
+            my_map[letter] = my_map.get(letter, 0) + 1
+
+        window_size = len(s1)
+        L = 0  
+
+        for R in range(len(s2)):
+            if s2[R] in my_map:
+                my_map2[s2[R]] = my_map2.get(s2[R], 0) + 1
+            else:
+                my_map2.clear()
+                L = R + 1 
+
+            if R - L + 1 > window_size:
+                left_char = s2[L]
+                if left_char in my_map2:
+                    my_map2[left_char] = my_map2[left_char]- 1
+                    if my_map2[left_char] == 0:
+                        del my_map2[left_char]
+                L = L+1  
+            if R - L + 1 == window_size and my_map == my_map2:
+                return True
+        return False
