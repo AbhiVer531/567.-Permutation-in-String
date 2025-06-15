@@ -1,0 +1,19 @@
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        countmap = Counter(s1)
+        counter = 0
+        window = len(s1)
+        for i in range(len(s2)):
+            if i + window > len(s2):
+                break
+            clone = countmap.copy()
+            counter = 0
+            for j in range(i, i + window):
+                if clone.get(s2[j], 0) > 0:
+                    clone[s2[j]] -= 1
+                    counter += 1
+                else:
+                    break
+            if counter == window:
+                return True
+        return False
